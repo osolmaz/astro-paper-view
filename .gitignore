@@ -1,0 +1,9 @@
+node_modules/
+.astro/
+dist/
+coverage/
+reports/
+.stryker-tmp/
+test-results/
+playwright-report/
+*.tgz
