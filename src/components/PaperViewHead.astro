@@ -1,0 +1,38 @@
+---
+import { PAPER_DEFAULT_MEDIA } from '../client/paper-scale';
+
+interface Props {
+  defaultPaper?: boolean;
+}
+const { defaultPaper = false } = Astro.props;
+---
+
+<script
+  is:inline
+  define:vars={{ defaultPaper, paperDefaultMedia: PAPER_DEFAULT_MEDIA }}
+>
+  (() => {
+    const requested = new URLSearchParams(location.search).get('view');
+    if (
+      requested === 'paper' ||
+      (requested !== 'web' &&
+        defaultPaper &&
+        matchMedia(paperDefaultMedia).matches)
+    ) {
+      document.documentElement.classList.add('paper-pending');
+      // A failed client bundle must never leave the article blank.
+      setTimeout(
+        () => document.documentElement.classList.remove('paper-pending'),
+        1500,
+      );
+    }
+  })();
+</script>
+<style is:inline>
+  html.paper-pending body {
+    background: #525659;
+  }
+  html.paper-pending body > * {
+    visibility: hidden;
+  }
+</style>

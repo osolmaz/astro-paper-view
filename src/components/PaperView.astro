@@ -1,0 +1,104 @@
+---
+import '../styles/paper.css';
+import '../styles/viewer.css';
+
+interface Props {
+  title: string;
+  author: string;
+  date?: Date | undefined;
+  abstract?: string | undefined;
+  contentId: string;
+  defaultPaper?: boolean;
+  /** Optional site navigation to keep inside the full-screen reader. */
+  headerSelector?: string | undefined;
+  lang?: string;
+}
+
+const {
+  title,
+  author,
+  date,
+  abstract,
+  contentId,
+  defaultPaper = false,
+  headerSelector,
+  lang = 'en',
+} = Astro.props;
+const dateText = date?.toLocaleDateString(lang, {
+  year: 'numeric',
+  month: 'long',
+  day: 'numeric',
+  timeZone: 'UTC',
+});
+---
+
+<section
+  id="paper-viewer"
+  class="paper-viewer"
+  role="dialog"
+  aria-modal="true"
+  aria-label="Paper view"
+  lang={lang}
+  hidden
+  data-content-id={contentId}
+  data-header-selector={headerSelector}
+  data-default-view={defaultPaper ? 'paper' : 'web'}
+>
+  <div class="paper-viewer__toolbar">
+    <button type="button" id="paper-exit" class="paper-viewer__button">
+      <span aria-hidden="true">←</span> Web view
+    </button>
+    <span class="paper-viewer__doc-title">{title}</span>
+    <div class="paper-viewer__zoom">
+      <button
+        type="button"
+        id="paper-zoom-out"
+        class="paper-viewer__button"
+        aria-label="Zoom out">−</button
+      >
+      <output id="paper-zoom-level" aria-label="Paper zoom">100%</output>
+      <button
+        type="button"
+        id="paper-zoom-in"
+        class="paper-viewer__button"
+        aria-label="Zoom in">+</button
+      >
+    </div>
+    <button type="button" id="paper-print" class="paper-viewer__button"
+      >Print / PDF</button
+    >
+  </div>
+  <div class="paper-viewer__scroll">
+    <div id="paper-sheet" class="paper-sheet">
+      <article class="paper-article">
+        <header class="paper-titleblock">
+          <h1 class="paper-title">{title}</h1>
+          <p class="paper-author">{author}</p>
+          {dateText && <p class="paper-date">{dateText}</p>}
+          {
+            abstract && (
+              <div class="paper-abstract">
+                <span class="paper-abstract-heading">Abstract</span>
+                <p>{abstract}</p>
+              </div>
+            )
+          }
+        </header>
+        <div id="paper-doc"></div>
+      </article>
+    </div>
+  </div>
+</section>
+
+<script>
+  import { mountPaperView } from '../client/paper-view';
+
+  let dispose = () => {};
+  function mount() {
+    dispose();
+    dispose = mountPaperView(document);
+  }
+  mount();
+  document.addEventListener('astro:page-load', mount);
+  document.addEventListener('astro:before-swap', () => dispose());
+</script>

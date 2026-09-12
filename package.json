@@ -1,0 +1,60 @@
+{
+  "name": "astro-paper-view",
+  "version": "0.1.0",
+  "description": "A printable paper view for Astro articles with live content, zoom, and local fonts.",
+  "type": "module",
+  "packageManager": "pnpm@11.25.0",
+  "engines": {
+    "node": ">=22.12"
+  },
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/osolmaz/astro-paper-view.git"
+  },
+  "author": "Onur Solmaz",
+  "files": [
+    "src",
+    "LICENSE",
+    "NOTICE.md"
+  ],
+  "exports": {
+    "./PaperView.astro": "./src/components/PaperView.astro",
+    "./PaperViewHead.astro": "./src/components/PaperViewHead.astro",
+    "./PaperViewToggle.astro": "./src/components/PaperViewToggle.astro"
+  },
+  "peerDependencies": {
+    "astro": ">=5 <8"
+  },
+  "scripts": {
+    "dev": "astro dev",
+    "build": "astro build",
+    "typecheck": "astro check --root example && tsc --noEmit",
+    "test": "vitest run --coverage",
+    "test:browser": "playwright test",
+    "lint": "eslint src tests",
+    "format:check": "prettier --check .",
+    "format": "prettier --write .",
+    "test:mutation": "stryker run",
+    "dry": "slophammer-ts dry .",
+    "quality": "slophammer-ts check ."
+  },
+  "devDependencies": {
+    "@astrojs/check": "^0.9.6",
+    "@eslint/js": "^9.39.0",
+    "@playwright/test": "1.61.1",
+    "@stryker-mutator/core": "^9.0.1",
+    "@stryker-mutator/vitest-runner": "^9.0.1",
+    "@types/node": "^22.15.21",
+    "@vitest/coverage-v8": "4.1.10",
+    "astro": "7.0.9",
+    "eslint": "^9.39.0",
+    "happy-dom": "^20.11.1",
+    "prettier": "^3.6.2",
+    "prettier-plugin-astro": "^0.14.1",
+    "slophammer-ts": "0.5.0",
+    "typescript": "6.0.3",
+    "typescript-eslint": "^8.46.0",
+    "vitest": "4.1.10"
+  }
+}
