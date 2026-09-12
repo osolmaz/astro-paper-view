@@ -1,0 +1,16 @@
+---
+interface Props {
+  class?: string;
+}
+const { class: className } = Astro.props;
+---
+
+<button
+  type="button"
+  id="paper-view-toggle"
+  class={className}
+  aria-haspopup="dialog"
+  aria-controls="paper-viewer"
+>
+  <slot>Paper view</slot>
+</button>

@@ -1,0 +1,10 @@
+node_modules
+.astro
+dist
+coverage
+reports
+.stryker-tmp
+test-results
+package-lock.json
+src/fonts/*.txt
+LICENSE

@@ -1,0 +1,141 @@
+body.paper-mode {
+  overflow: hidden;
+}
+.paper-viewer {
+  position: fixed;
+  inset: 0;
+  z-index: 1000;
+  display: flex;
+  flex-direction: column;
+  background: #525659;
+  color-scheme: light;
+}
+.paper-viewer[hidden] {
+  display: none;
+}
+.paper-viewer [data-paper-header] {
+  flex: none;
+  background: var(--paper-header-background, Canvas);
+}
+.paper-viewer__toolbar {
+  flex: none;
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  padding: 0.45rem 1rem;
+  background: #323639;
+  color: #f1f3f4;
+  font:
+    14px/1.2 system-ui,
+    sans-serif;
+  box-shadow: 0 1px 4px rgb(0 0 0 / 35%);
+}
+.paper-viewer__button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.4rem;
+  padding: 0.4rem 0.7rem;
+  min-height: 32px;
+  border: 1px solid rgb(255 255 255 / 28%);
+  border-radius: 0.5rem;
+  background: transparent;
+  color: inherit;
+  font: inherit;
+  text-transform: none;
+  cursor: pointer;
+  white-space: nowrap;
+}
+.paper-viewer__button:hover {
+  background: rgb(255 255 255 / 8%);
+}
+.paper-viewer__button:focus-visible {
+  outline: 2px solid white;
+  outline-offset: 2px;
+}
+.paper-viewer__button:disabled {
+  opacity: 0.4;
+  cursor: default;
+}
+.paper-viewer__zoom {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+}
+.paper-viewer__zoom output {
+  min-width: 3.2em;
+  text-align: center;
+  font-variant-numeric: tabular-nums;
+}
+.paper-viewer__doc-title {
+  flex: 1;
+  text-align: center;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.paper-viewer__scroll {
+  flex: 1;
+  min-height: 0;
+  overflow: auto;
+  padding: 2rem 1rem 4rem;
+}
+.paper-sheet {
+  box-sizing: border-box;
+  width: 8.5in;
+  max-width: none;
+  min-height: 11in;
+  margin: 0 auto;
+  padding: 25mm 22mm 30mm;
+  background: #fff;
+  box-shadow: 0 2px 10px rgb(0 0 0 / 45%);
+  zoom: var(--paper-scale, 1);
+  -webkit-text-size-adjust: 100%;
+  text-size-adjust: 100%;
+}
+@media (max-width: 600px) {
+  .paper-viewer__doc-title {
+    display: none;
+  }
+  .paper-viewer__toolbar {
+    justify-content: space-between;
+    gap: 0.4rem;
+    padding: 0.5rem;
+  }
+  .paper-viewer__button {
+    min-height: 44px;
+    padding: 0.4rem;
+  }
+  .paper-viewer__scroll {
+    padding: 1rem 0.5rem 2rem;
+  }
+}
+@media print {
+  body.paper-mode {
+    overflow: visible;
+  }
+  body.paper-mode > :not(#paper-viewer) {
+    display: none !important;
+  }
+  body.paper-mode .paper-viewer {
+    position: static;
+    display: block;
+    background: none;
+  }
+  body.paper-mode .paper-viewer__toolbar,
+  body.paper-mode [data-paper-header] {
+    display: none;
+  }
+  body.paper-mode .paper-viewer__scroll {
+    overflow: visible;
+    padding: 0;
+  }
+  body.paper-mode .paper-sheet {
+    width: auto;
+    min-height: 0;
+    margin: 0;
+    padding: 0;
+    box-shadow: none;
+    zoom: 1 !important;
+  }
+}

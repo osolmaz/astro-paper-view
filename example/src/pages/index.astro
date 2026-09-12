@@ -1,0 +1,56 @@
+---
+import PaperView from '../../../src/components/PaperView.astro';
+import PaperViewHead from '../../../src/components/PaperViewHead.astro';
+import PaperViewToggle from '../../../src/components/PaperViewToggle.astro';
+---
+
+<!doctype html>
+<html lang="en">
+  <head
+    ><meta charset="utf-8" /><meta
+      name="viewport"
+      content="width=device-width"
+    /><title>Paper view example</title><PaperViewHead defaultPaper /></head
+  >
+  <body>
+    <header class="site-header"><a href="/?view=web">Example site</a></header>
+    <main>
+      <h1>A small interactive paper</h1>
+      <PaperViewToggle />
+      <div id="article-content">
+        <p>
+          This article stays interactive when you switch between web and paper
+          views.
+        </p>
+        <h2 id="experiment">Experiment</h2>
+        <button id="counter" type="button">Count 0</button>
+        <label>Your note <input id="note" /></label>
+        <p><a href="#results">Go to results</a></p>
+        <h2 id="results">Results</h2>
+        <table>
+          <thead><tr><th>View</th><th>Content copies</th></tr></thead><tbody
+            ><tr><td>Web</td><td>1</td></tr><tr><td>Paper</td><td>1</td></tr
+            ></tbody
+          >
+        </table>
+        <p>The same content appears in the printed document.</p>
+      </div>
+    </main>
+    <PaperView
+      title="A small interactive paper"
+      author="Example Author"
+      date={new Date('2026-09-11')}
+      abstract="A working example of an article with one live body and two reading views."
+      contentId="article-content"
+      headerSelector=".site-header"
+      defaultPaper
+    />
+    <script>
+      let count = 0;
+      document.querySelector('#counter')?.addEventListener('click', (event) => {
+        if (event.currentTarget instanceof HTMLElement)
+          event.currentTarget.textContent = `Count ${++count}`;
+      });
+    </script>
+  </body>
+</html>
