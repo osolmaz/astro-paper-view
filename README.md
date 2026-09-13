@@ -9,7 +9,7 @@ Interactive figures keep their listeners and form state when readers switch view
 Requires Astro 5–7 and Node 22.12 or later. Install from GitHub, replacing `<ref>` with a commit or tag:
 
 ```sh
-npm install 'github:osolmaz/astro-paper-view#<ref>'
+npm install 'https://codeload.github.com/osolmaz/astro-paper-view/tar.gz/<ref>'
 ```
 
 ## Use
