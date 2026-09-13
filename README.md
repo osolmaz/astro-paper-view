@@ -38,10 +38,11 @@ const paper = post.data.paper === true;
       title={post.data.title}
       author="Your Name"
       date={post.data.date}
-      abstract={post.data.abstract}
       contentId="article-content"
       defaultPaper={paper}
-    />
+    >
+      {post.data.abstract && <p slot="abstract">{post.data.abstract}</p>}
+    </PaperView>
   </body>
 </html>
 ```
@@ -54,6 +55,18 @@ abstract: A short description of the question and result.
 ```
 
 With `defaultPaper` enabled, paper mode opens on viewports at least 1240 pixels wide. Smaller screens keep the normal web layout until the reader selects **Paper view**. Explicit `?view=paper` and `?view=web` links override the default. **Web view** or Escape restores the original page. **Print / PDF** prints the paper without the toolbar.
+
+Use the optional `abstract` slot for formatted text or links. The package renders the Astro content you provide. To use Markdown in frontmatter, render it with the host site's Markdown processor before passing it to the slot. Plain text expressions remain escaped.
+
+```astro
+<PaperView title="A study" author="Your Name" contentId="article-content">
+  <p slot="abstract">
+    We studied the method described in <a href="/previous-study/"
+      >our earlier work</a
+    >.
+  </p>
+</PaperView>
+```
 
 Pass the title and author with the ID of the content element. Its optional `date` is a JavaScript `Date`. The optional `lang` controls the paper language and date formatting. Supply `headerSelector` if the site's navigation should remain visible inside paper view. The toggle accepts a `class` prop and a slot for its label.
 

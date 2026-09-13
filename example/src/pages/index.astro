@@ -2,6 +2,8 @@
 import PaperView from '../../../src/components/PaperView.astro';
 import PaperViewHead from '../../../src/components/PaperViewHead.astro';
 import PaperViewToggle from '../../../src/components/PaperViewToggle.astro';
+
+const literalText = '<em>literal text</em>';
 ---
 
 <!doctype html>
@@ -40,11 +42,18 @@ import PaperViewToggle from '../../../src/components/PaperViewToggle.astro';
       title="A small interactive paper"
       author="Example Author"
       date={new Date('2026-09-11')}
-      abstract="A working example of an article with one live body and two reading views."
       contentId="article-content"
       headerSelector=".site-header"
       defaultPaper
-    />
+    >
+      <p slot="abstract">
+        A working example with one live body and two reading views. Read the{
+          ' '
+        }
+        <a href="/?view=web#experiment">experiment</a>. Expressions remain
+        escaped, including {literalText}.
+      </p>
+    </PaperView>
     <script>
       let count = 0;
       document.querySelector('#counter')?.addEventListener('click', (event) => {
