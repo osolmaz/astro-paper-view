@@ -6,7 +6,6 @@ interface Props {
   title: string;
   author: string;
   date?: Date | undefined;
-  abstract?: string | undefined;
   contentId: string;
   defaultPaper?: boolean;
   /** Optional site navigation to keep inside the full-screen reader. */
@@ -18,12 +17,12 @@ const {
   title,
   author,
   date,
-  abstract,
   contentId,
   defaultPaper = false,
   headerSelector,
   lang = 'en',
 } = Astro.props;
+const abstract = await Astro.slots.render('abstract');
 const dateText = date?.toLocaleDateString(lang, {
   year: 'numeric',
   month: 'long',
@@ -76,10 +75,10 @@ const dateText = date?.toLocaleDateString(lang, {
           <p class="paper-author">{author}</p>
           {dateText && <p class="paper-date">{dateText}</p>}
           {
-            abstract && (
+            abstract?.trim() && (
               <div class="paper-abstract">
                 <span class="paper-abstract-heading">Abstract</span>
-                <p>{abstract}</p>
+                <Fragment set:html={abstract} />
               </div>
             )
           }

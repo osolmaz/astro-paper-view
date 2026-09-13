@@ -1,0 +1,16 @@
+---
+import PaperView from '../../../src/components/PaperView.astro';
+---
+
+<!doctype html>
+<html lang="en">
+  <head><meta charset="utf-8" /><title>Paper without an abstract</title></head>
+  <body>
+    <main id="article-content"><p>An article can omit its abstract.</p></main>
+    <PaperView
+      title="Paper without an abstract"
+      author="Example Author"
+      contentId="article-content"
+    />
+  </body>
+</html>

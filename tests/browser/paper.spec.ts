@@ -64,6 +64,30 @@ test('desktop default and mobile explicit paper fit the sheet and load local fon
   expect(missing).toEqual([]);
 });
 
+test('abstract slots preserve links and escape text expressions', async ({
+  page,
+}) => {
+  await page.goto('/?view=paper');
+  const abstract = page.locator('.paper-abstract');
+  const link = abstract.getByRole('link', { name: 'experiment', exact: true });
+  await expect(link).toBeVisible();
+  await expect(link).toHaveAttribute('href', '/?view=web#experiment');
+  await expect(abstract).toContainText('<em>literal text</em>');
+  await expect(abstract.locator('em')).toHaveCount(0);
+  await expect(abstract.locator('p')).toHaveCount(1);
+  await link.focus();
+  await expect(link).toBeFocused();
+  await link.click();
+  await expect(page).toHaveURL(/\?view=web#experiment$/);
+  await expect(page.getByRole('dialog')).toBeHidden();
+});
+
+test('an omitted abstract leaves no empty heading', async ({ page }) => {
+  await page.goto('/no-abstract?view=paper');
+  await expect(page.getByRole('dialog')).toBeVisible();
+  await expect(page.locator('.paper-abstract')).toHaveCount(0);
+});
+
 test('without JavaScript the complete article is readable', async ({
   browser,
 }) => {
