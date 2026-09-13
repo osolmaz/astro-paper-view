@@ -64,6 +64,26 @@ test('desktop default and mobile explicit paper fit the sheet and load local fon
   expect(missing).toEqual([]);
 });
 
+test('paper prose is left-aligned on desktop, mobile, and print', async ({
+  page,
+}) => {
+  for (const width of [1440, 390]) {
+    await page.setViewportSize({ width, height: 1000 });
+    await page.goto('/?view=paper');
+    for (const media of ['screen', 'print'] as const) {
+      await page.emulateMedia({ media });
+      await expect(page.locator('.paper-abstract p')).toHaveCSS(
+        'text-align',
+        'left',
+      );
+      await expect(page.locator('.paper-content p').first()).toHaveCSS(
+        'text-align',
+        'left',
+      );
+    }
+  }
+});
+
 test('abstract slots preserve links and escape text expressions', async ({
   page,
 }) => {
